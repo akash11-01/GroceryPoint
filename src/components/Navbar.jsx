@@ -10,7 +10,6 @@ export default function Navbar() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    dispatch(signInSuccess(true));
     const logout = async () => {
         dispatch(signOut());
         navigate('/');
@@ -45,7 +44,8 @@ export default function Navbar() {
                     : (
                         <div className="relative group">
                             <img src={assets.profile_icon} alt="" className="w-10" />
-                            {/* hover effect not working */}                            <ul className="group-hover:black absolute top-10 right-0 bg-white shadow border border-gray-200 py-2.5 w-30 rounded-md text-sm z-40">
+                            {/* hover effect not working */}
+                            <ul className="hidden group-hover:black absolute top-10 right-0 bg-white shadow border border-gray-200 py-2.5 w-30 rounded-md text-sm z-40">
                                 <li onClick={() => navigate('my-orders')} className="p-1.5 pl-3 hover-bg-[#4fbf8b] cursor-pointer">My Orders</li>
                                 <li onClick={logout} className="p-1.5 pl-3 hover-bg-[#4fbf8b] cursor-pointer">Logout</li>
                             </ul>

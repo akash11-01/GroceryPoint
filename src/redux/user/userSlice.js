@@ -7,6 +7,8 @@ const initialState = {
   isSeller: false,
   products: null,
   loginForm: false,
+  products: [],
+  cartItems: {},
 };
 const userSlice = createSlice({
   name: "user",
@@ -31,12 +33,21 @@ const userSlice = createSlice({
     signOut: (state) => {
       state.currentUser = null;
     },
+    setProduct: (state, action) => {
+      // console.log(1);
+      state.products = action.payload;
+    },
+    setCartItems: (state, action) => {
+      state.cartItems = action.payload;
+    },
   },
 });
 
 export const {
   signInStart,
   signOut,
+  setProduct,
+  setCartItems,
   signInFailure,
   signInSuccess,
   showUserLoginForm,
