@@ -2,21 +2,25 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { assets } from "../assets/assets";
 import { addToCart, fetchProducts, removeFromCart } from "../redux/user/userThunk";
+import { useNavigate } from "react-router-dom";
 
 
 export const ProductCard = ({ product }) => {
-    const [count, setCount] = useState(0);
     const { cartItems } = useSelector((state) => state.user)
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     useEffect(() => {
         dispatch(fetchProducts());
     }, [dispatch])
 
-    // console.log(products)
 
     return product && (
-        <div className="border border-gray-500/20 rounded-md md:px-4 px-3 py-2 bg-white min-w-56 max-w-56 w-full">
+        <div onClick={() => {
+            navigate(`/products/${product.category.toLowerCase()}/${product._id}`);
+            scrollTo(0, 0)
+        }
+        } className="border border-gray-500/20 rounded-md md:px-4 px-3 py-2 bg-white min-w-56 max-w-56 w-full">
             <div className="group cursor-pointer flex items-center justify-center px-2">
                 <img className="group-hover:scale-105 transition max-w-26 md:max-w-36" src={product.image[0]} alt={product.name} />
             </div>

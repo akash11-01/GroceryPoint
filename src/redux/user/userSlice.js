@@ -9,36 +9,38 @@ const initialState = {
   loginForm: false,
   products: [],
   cartItems: {},
+  searchQuery: [],
+  cartCount: null,
+  cartAmount: null,
 };
 const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    signInStart: (state) => {
-      state.loading = true;
-      state.error = null;
-    },
-    signInSuccess: (state, action) => {
-      state.loading = false;
+    setUser: (state, action) => {
       state.currentUser = action.payload;
-      state.error = null;
+      state.loginForm = false;
     },
     showUserLoginForm: (state, action) => {
       state.loginForm = action.payload;
-    },
-    signInFailure: (state, action) => {
-      state.error = action.payload;
-      state.loading = false;
     },
     signOut: (state) => {
       state.currentUser = null;
     },
     setProduct: (state, action) => {
-      // console.log(1);
       state.products = action.payload;
     },
     setCartItems: (state, action) => {
       state.cartItems = action.payload;
+    },
+    setSearchQuery: (state, action) => {
+      state.searchQuery = action.payload;
+    },
+    setCartCount: (state, action) => {
+      state.cartCount = action.payload;
+    },
+    setCartAmount: (state, action) => {
+      state.cartAmount = action.payload;
     },
   },
 });
@@ -49,7 +51,10 @@ export const {
   setProduct,
   setCartItems,
   signInFailure,
-  signInSuccess,
+  setCartAmount,
+  setCartCount,
+  setUser,
+  setSearchQuery,
   showUserLoginForm,
 } = userSlice.actions;
 

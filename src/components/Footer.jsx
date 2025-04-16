@@ -27,7 +27,7 @@ export const Footer = () => {
                 </div>
             </div>
             <p className="py-4 text-center text-sm md:text-base text-gray-500/80">
-                Copyright 2025 © PrebuiltUI All Right Reserved.
+                Copyright {new Date().getFullYear()} © GreatStack.Dev All Right Reserved.
             </p>
         </div>
     );
