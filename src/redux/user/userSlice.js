@@ -42,6 +42,9 @@ const userSlice = createSlice({
     setCartAmount: (state, action) => {
       state.cartAmount = action.payload;
     },
+    setIsSeller: (state, action) => {
+      state.isSeller = action.payload;
+    },
   },
 });
 
@@ -54,6 +57,7 @@ export const {
   setCartAmount,
   setCartCount,
   setUser,
+  setIsSeller,
   setSearchQuery,
   showUserLoginForm,
 } = userSlice.actions;
