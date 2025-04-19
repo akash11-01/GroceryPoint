@@ -29,12 +29,7 @@ app.post("/stripe", express.raw({ type: "application/json" }), stripeWebhooks);
 // MiddleWare configuration
 app.use(express.json());
 app.use(cookieParser());
-app.use(
-  cors({
-    // origin: allowedOrigins,
-    // credentials: true,
-  })
-);
+app.use(cors({ credentials: true }));
 
 app.get("/", (req, res) => res.send("api working"));
 app.use("/api/user", userRouter);
