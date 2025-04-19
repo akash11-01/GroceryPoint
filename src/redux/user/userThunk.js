@@ -3,15 +3,45 @@ import {
   setCartAmount,
   setCartCount,
   setCartItems,
+  setIsSeller,
   setProduct,
+  setUser,
 } from "./userSlice";
 import { dummyProducts } from "../../assets/assets";
 import toast from "react-hot-toast";
+import { instance } from "../../services/api";
+
+//feth user auth-status,user data, cart items;
+export const fetchUser = createAsyncThunk(
+  "user/fetUser",
+  async (_, { dispatch }) => {
+    try {
+      const { data } = await instance.get("/api/user/is-auth", {
+        withCredentials: true,
+      });
+      if (data.success) {
+        dispatch(setUser(data.user));
+        dispatch(setCartItems(data.user.cartItems));
+      }
+    } catch (error) {
+      dispatch(setUser(null));
+    }
+  }
+);
 
 export const fetchProducts = createAsyncThunk(
   "user/fetchProducts",
   async (_, { dispatch }) => {
-    dispatch(setProduct(dummyProducts));
+    try {
+      const { data } = await instance.get("/api/product/list");
+      if (data.success) {
+        dispatch(setProduct(data.products));
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
   }
 );
 

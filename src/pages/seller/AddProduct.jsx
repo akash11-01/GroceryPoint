@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { assets, categories } from "../../assets/assets";
+import { instance } from "../../services/api";
+import toast from "react-hot-toast";
 
 export default function AddProduct() {
   const [files, setFiles] = useState([]);
@@ -7,10 +9,42 @@ export default function AddProduct() {
   const [category, setCategory] = useState("");
   const [price, setPrice] = useState("");
   const [offerPrice, setOfferPrice] = useState("");
-  const [description, setdDescription] = useState("");
+  const [description, setDescription] = useState("");
 
-  const onSubmitHandler = (e) => {
-    e.preventDefault();
+  const onSubmitHandler = async (e) => {
+    try {
+      e.preventDefault();
+      const productData = {
+        name,
+        description: description.split("\n"),
+        category,
+        price,
+        offerPrice,
+      };
+      const formData = new FormData();
+      formData.append("productData", JSON.stringify(productData));
+      //adding images
+      for (let i = 0; i < files.length; i++) {
+        formData.append("images", files[i]);
+      }
+
+      const { data } = await instance.post("/api/product/add", formData, {
+        withCredentials: true,
+      });
+      if (data.success) {
+        toast.success(data.message);
+        setName("");
+        setDescription("");
+        setCategory("");
+        setPrice("");
+        setOfferPrice("");
+        setFiles([]);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
   };
 
   return (
@@ -38,7 +72,7 @@ export default function AddProduct() {
                     hidden
                   />
                   <img
-                    className="max-w-24 h-24 cursor-pointer rounded-full"
+                    className="max-w-24 cursor-pointer"
                     src={
                       files[index]
                         ? URL.createObjectURL(files[index])
@@ -74,7 +108,7 @@ export default function AddProduct() {
             Product Description
           </label>
           <textarea
-            onChange={(e) => setdDescription(e.target.value)}
+            onChange={(e) => setDescription(e.target.value)}
             value={description}
             id="product-description"
             rows={4}

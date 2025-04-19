@@ -1,8 +1,34 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { instance } from "../../services/api";
+import { fetchProducts } from "../../redux/user/userThunk";
+import toast from "react-hot-toast";
 
 export default function ProductList() {
   const { products } = useSelector((state) => state.user);
+
+  const dispatch = useDispatch();
+
+  const toggleStock = async (id, inStock) => {
+    try {
+      const { data } = await instance.post(
+        "/api/product/stock",
+        {
+          id,
+          inStock,
+        },
+        { withCredentials: true }
+      );
+      if (data.success) {
+        dispatch(fetchProducts());
+        toast.success(data.message);
+      } else {
+        toast.success(data.message);
+      }
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
+  };
   return (
     <div className="no-scrollbar flex-1 h-[95vh] overflow-y-scroll flex flex-col justify-between">
       <div className="w-full md:p-10 p-4">
@@ -40,7 +66,15 @@ export default function ProductList() {
                   </td>
                   <td className="px-4 py-3">
                     <label className="relative inline-flex items-center cursor-pointer text-gray-900 gap-3">
-                      <input type="checkbox" className="sr-only peer" />
+                      <input
+                        onClick={() => {
+                          console.log(product);
+                          toggleStock(product._id, !product.inStock);
+                        }}
+                        checked={product.inStock}
+                        type="checkbox"
+                        className="sr-only peer"
+                      />
                       <div className="w-12 h-7 bg-slate-300 rounded-full peer peer-checked:bg-blue-600 transition-colors duration-200"></div>
                       <span className="dot absolute left-1 top-1 w-5 h-5 bg-white rounded-full transition-transform duration-200 ease-in-out peer-checked:translate-x-5"></span>
                     </label>

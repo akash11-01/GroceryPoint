@@ -1,11 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { assets, dummyOrders } from "../../assets/assets";
+import { instance } from "../../services/api";
+import toast from "react-hot-toast";
 
 export default function Orders() {
   const [orders, setOrders] = useState([]);
 
   const fetchOrders = async () => {
-    setOrders(dummyOrders);
+    try {
+      const { data } = await instance.get("/api/order/seller", {
+        withCredentials: true,
+      });
+      if (data.success) {
+        setOrders(data.orders);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
