@@ -30,7 +30,7 @@ export const registerUser = async (req, res, next) => {
       .cookie("token", token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production", //use secure cookie in production
-        sameSite: process.env.NODE_ENV === "production" ? "node" : "strict", //CSRF protection
+        sameSite: process.env.NODE_ENV === "production" ? "none" : "strict", //CSRF protection
         maxAge: 7 * 24 * 60 * 60 * 1000, //cookie expiration time
       })
       .status(201)
@@ -100,7 +100,7 @@ export const logout = async (req, res, next) => {
       .clearCookie("token", {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
-        sameSite: process.env.NODE_ENV === "production" ? "node" : "strict",
+        sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
       })
       .status(200)
       .json({ success: true, message: "Logged out" });
