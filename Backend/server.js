@@ -20,7 +20,10 @@ await connectDb();
 await connectCloudinary();
 
 //allow multiple origins
-const allowedOrigins = ["http://localhost:5173"];
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://grocery-point-frontend.vercel.app/",
+];
 app.post("/stripe", express.raw({ type: "application/json" }), stripeWebhooks);
 
 // MiddleWare configuration
