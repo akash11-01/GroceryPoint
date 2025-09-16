@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 // imput field component
 const InputField = ({ type, placeholder, name, handleChange, address }) => (
   <input
-    className="w-full px-2 border border-gray-500/30 rounded outline-none text-gray-500
+    className="w-full p-2 border border-gray-500/30 rounded outline-none text-gray-500
     focus:border-[#4fbf8b] transition "
     type={type}
     placeholder={placeholder}
@@ -67,16 +67,16 @@ export default function AddAddress() {
     }));
   };
   return (
-    <div className="mt-16 pb-16">
-      <p className="text-2xl md:text-3xl text-gray-500">
+    <div className="mt-8 pb-8 px-2 sm:px-4 md:px-8 lg:px-24">
+      <p className="text-xl sm:text-2xl md:text-3xl text-gray-500 text-center md:text-left">
         Add shipping{" "}
         <span className="font-semibold text-[#4fbf8b]">Address</span>
       </p>
-      <div className="flex flex-col-reverse md:flex-row justify-between mt-10">
+      <div className="flex flex-col-reverse md:flex-row justify-between items-center md:items-start mt-6 md:mt-10 gap-8 md:gap-0">
         {/* left page */}
-        <div className="flex-1 max-w-md">
+        <div className="w-full max-w-md mx-auto md:mx-0 flex-1">
           <form onSubmit={onSubmitHandler} className="space-y-3 mt-6 text-sm">
-            <div className="grid grid-cols-2 gap-4 ">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 ">
               <InputField
                 handleChange={handleChange}
                 address={address}
@@ -108,7 +108,7 @@ export default function AddAddress() {
               placeholder="Street"
             />
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <InputField
                 handleChange={handleChange}
                 type="text"
@@ -124,7 +124,7 @@ export default function AddAddress() {
                 placeholder="State"
               />
             </div>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <InputField
                 handleChange={handleChange}
                 type="number"
@@ -151,7 +151,7 @@ export default function AddAddress() {
 
             <button
               className="w-full mt-6 bg-[#4fbf8b] text-white py-3
-                        hover:bg-[#44ae7c] transition cursor-pointer uppercase "
+                        hover:bg-[#44ae7c] transition cursor-pointer uppercase text-base sm:text-sm"
             >
               Save address
             </button>
@@ -162,7 +162,7 @@ export default function AddAddress() {
         <img
           src={assets.add_address_iamge}
           alt="addAddress"
-          className="md:mr-16 mb-16 md:mt-0"
+          className="w-40 h-40 sm:w-48 sm:h-48 md:w-64 md:h-72 lg:w-80 lg:h-96 object-contain md:mr-16 mb-8 md:mb-16 md:mt-0"
         />
       </div>
     </div>

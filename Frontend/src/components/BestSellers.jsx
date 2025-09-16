@@ -10,12 +10,13 @@ export default function BestSellers() {
       <div className="mt-16">
         <p className="text-2xl md:text-3xl font-medium">Best Sellers</p>
         <div className="flex gap-6 flex-wrap mt-6 ">
-          {products
-            .filter((product) => product.inStock)
-            .slice(0, 5)
-            .map((product, index) => (
-              <ProductCard key={index} product={product} />
-            ))}
+          {products &&
+            products
+              .filter((product) => product.inStock)
+              .slice(0, 5)
+              .map((product, index) => (
+                <ProductCard key={index} product={product} />
+              ))}
         </div>
       </div>
     </div>
