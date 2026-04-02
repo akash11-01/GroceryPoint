@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { instance } from "../services/api";
 import toast from "react-hot-toast";
+import { showUserLoginForm } from "../redux/user/userSlice";
 
 // imput field component
 const InputField = ({ type, placeholder, name, handleChange, address }) => (
@@ -40,7 +41,7 @@ export default function AddAddress() {
       const { data } = await instance.post(
         "/api/address/add",
         { address },
-        { withCredentials: true }
+        { withCredentials: true },
       );
       if (data.success) {
         toast.success(data.message);
@@ -55,9 +56,11 @@ export default function AddAddress() {
 
   useEffect(() => {
     if (!currentUser) {
+      dispatch(showUserLoginForm(true));
+      toast.error("Please login to add address");
       navigate("/cart");
     }
-  }, []);
+  }, [currentUser, dispatch, navigate]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
