@@ -26,7 +26,7 @@ export const fetchUser = createAsyncThunk(
     } catch (error) {
       dispatch(setUser(null));
     }
-  }
+  },
 );
 
 export const fetchProducts = createAsyncThunk(
@@ -42,7 +42,7 @@ export const fetchProducts = createAsyncThunk(
     } catch (error) {
       toast.error(error.message);
     }
-  }
+  },
 );
 
 export const addToCart = createAsyncThunk(
@@ -61,7 +61,7 @@ export const addToCart = createAsyncThunk(
     dispatch(getCartCount());
     dispatch(getCartAmount());
     toast.success("Added to Cart");
-  }
+  },
 );
 
 export const updateCartItem = createAsyncThunk(
@@ -70,10 +70,11 @@ export const updateCartItem = createAsyncThunk(
     const { cartItems } = getState().user;
     let cartData = structuredClone(cartItems);
     cartData[itemId] = quantity;
-    // console.log(cartData);
     dispatch(setCartItems(cartData));
+    dispatch(getCartCount());
+    dispatch(getCartAmount());
     toast.success("Cart Updated");
-  }
+  },
 );
 
 export const removeFromCart = createAsyncThunk(
@@ -93,7 +94,7 @@ export const removeFromCart = createAsyncThunk(
     dispatch(getCartCount());
     dispatch(getCartAmount());
     toast.success("Removed From Cart");
-  }
+  },
 );
 
 export const getCartCount = createAsyncThunk(
@@ -105,7 +106,7 @@ export const getCartCount = createAsyncThunk(
       totalCount += cartItems[item];
     }
     dispatch(setCartCount(totalCount));
-  }
+  },
 );
 
 export const getCartAmount = createAsyncThunk(
@@ -115,10 +116,10 @@ export const getCartAmount = createAsyncThunk(
     let totalAmount = 0;
     for (const items in cartItems) {
       let itemInfo = products.find((product) => product._id === items);
-      if (cartItems[items] > 0) {
+      if (itemInfo && cartItems[items] > 0) {
         totalAmount += itemInfo.offerPrice * cartItems[items];
       }
     }
     dispatch(setCartAmount(Math.floor(totalAmount * 100) / 100));
-  }
+  },
 );

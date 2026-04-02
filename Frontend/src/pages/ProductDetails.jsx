@@ -19,7 +19,7 @@ export const ProductDetails = () => {
     if (products.length > 0) {
       let productCopy = [...products];
       productCopy = productCopy.filter(
-        (item) => product.category === item.category
+        (item) => product.category === item.category,
       );
       setRelatedProducts(productCopy.slice(0, 5));
     }
@@ -78,9 +78,9 @@ export const ProductDetails = () => {
 
             <div className="mt-6">
               <p className="text-gray-500/70 line-through">
-                MRP: ${product.price}
+                MRP: ₹{product.price}
               </p>
-              <p className="text-2xl font-medium">MRP: ${product.offerPrice}</p>
+              <p className="text-2xl font-medium">MRP: ₹{product.offerPrice}</p>
               <span className="text-gray-500/70">(inclusive of all taxes)</span>
             </div>
 

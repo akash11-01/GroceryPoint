@@ -69,7 +69,7 @@ export default function Orders() {
               <p>{order.address.phone}</p>
             </div>
 
-            <p className="font-medium text-lg my-auto">${order.amount}</p>
+            <p className="font-medium text-lg my-auto">₹{order.amount}</p>
 
             <div className="flex flex-col text-sm md:text-base text-black/60">
               <p>Method: {order.paymentType}</p>

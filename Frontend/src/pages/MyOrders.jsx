@@ -42,7 +42,7 @@ export default function MyOrders() {
             <p className="flex justify-between md:items-center text-gray-400 md:font-medium max-md:flex-col">
               <span>OrderId: {order._id} </span>
               <span>Payment: {order.paymentType} </span>
-              <span>Total Amount: ${order.amount} </span>
+              <span>Total Amount: ₹{order.amount} </span>
             </p>
 
             {order.items.map((item, index) => (
@@ -77,7 +77,7 @@ export default function MyOrders() {
                 </div>
 
                 <p className="text-[#4fbf8b] text-lg font-medium">
-                  Amount: ${item.product.offerPrice * item.quantity}
+                  Amount: ₹{item.product.offerPrice * item.quantity}
                 </p>
               </div>
             ))}
