@@ -8,15 +8,26 @@ import {
 import { instance } from "../services/api";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import { getCartCount } from "../redux/user/userThunk";
+import { getCartAmount, getCartCount } from "../redux/user/userThunk";
 
 export default function Login() {
   const [state, setState] = React.useState("login");
   const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const { cartItems } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const mergeCartItems = (guestCart = {}, userCart = {}) => {
+    const mergedCart = { ...userCart };
+
+    for (const itemId in guestCart) {
+      mergedCart[itemId] = (mergedCart[itemId] || 0) + guestCart[itemId];
+    }
+
+    return mergedCart;
+  };
 
   const submitHandler = async (e) => {
     try {
@@ -28,13 +39,23 @@ export default function Login() {
           email,
           password,
         },
-        { withCredentials: true }
+        { withCredentials: true },
       );
 
       if (data.success) {
+        const mergedCart = mergeCartItems(cartItems, data.user.cartItems || {});
+
         dispatch(setUser(data.user));
-        dispatch(setCartItems(data.user.cartItems));
+        dispatch(setCartItems(mergedCart));
+
+        await instance.post(
+          "/api/cart/update",
+          { cartItems: mergedCart },
+          { withCredentials: true },
+        );
+
         dispatch(getCartCount());
+        dispatch(getCartAmount());
         navigate("/");
         dispatch(showUserLoginForm(false));
       } else {
