@@ -13,7 +13,7 @@ import toast from "react-hot-toast";
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const { currentUser, searchQuery, cartCount, cartItems } = useSelector(
-    (state) => state.user
+    (state) => state.user,
   );
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -72,7 +72,7 @@ export default function Navbar() {
             className="w-6 opacity-80"
           />
           <button className="absolute -top-2 -right-3 text-xs text-white bg-[#4fbf8b] w-[18px] h-[18px] rounded-full">
-            {currentUser ? <p>{cartCount}</p> : <p>0</p>}
+            <p>{cartCount || 0}</p>
           </button>
         </div>
 
@@ -116,7 +116,7 @@ export default function Navbar() {
             className="w-6 opacity-80"
           />
           <button className="absolute -top-2 -right-3 text-xs text-white bg-[#4fbf8b] w-[18px] h-[18px] rounded-full">
-            {cartCount}
+            {cartCount || 0}
           </button>
         </div>
         <button
@@ -154,11 +154,7 @@ export default function Navbar() {
             My Orders
           </NavLink>
         )}
-        <NavLink
-          to="/contacts"
-          onClick={() => setOpen(false)}
-          className="block"
-        >
+        <NavLink to="/contact" onClick={() => setOpen(false)} className="block">
           Contact
         </NavLink>
         {!currentUser ? (
